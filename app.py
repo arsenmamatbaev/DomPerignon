@@ -5,6 +5,7 @@ from dotenv.main import load_dotenv
 """ Все импорты aiogram """
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import CommandStart, Command, StateFilter
+from aiogram.fsm.storage.redis import RedisStorage
 """ Импорт filters """
 from core.filters.IsAdmin import IsAdmin
 """ Импорт middlewares """
@@ -21,10 +22,11 @@ from core.States import States, AdminsStates
 
 load_dotenv()
 
+storage = RedisStorage.from_url('redis://localhost:6379/1')
 main_loop = asyncio.new_event_loop()
 bot = Bot(os.getenv('API_KEY'),
           parse_mode='html')
-dp = Dispatcher()
+dp = Dispatcher(storage=storage)
 db = DataBase(password='555326')
 connection: DBConnection
 

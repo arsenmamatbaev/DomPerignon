@@ -112,7 +112,7 @@ class DBConnection:
     async def get_admins(self) -> Union[List[User], User]:
         query = "SELECT * FROM admins;"
         admins = await self.__connection.fetch(query)
-        return_admins: list = []
+        return_admins: list = [User(user_id=)]
         for admin in admins:
             return_admins.append(
                 User(user_id=admin['user_id'],

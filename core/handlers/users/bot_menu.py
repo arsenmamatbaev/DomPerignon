@@ -36,5 +36,10 @@ async def get_contact(message: Message, db: DBConnection, state: FSMContext, bot
         await bot.send_contact(chat_id=-4014679130,
                                phone_number=message.contact.phone_number,
                                first_name=message.contact.first_name)
-        await state.set_state(States.main_menu_state)
+    else:
+        await message.answer('✨<b>Ваша заявка принята, мы свяжемся с вами в ближайшее время</b>',
+                             reply_markup=start_keyboard)
+        await bot.send_message(chat_id=-4014679130,
+                               text=f'<b>Новая заявка</b>\n<b>Номер телефона:</b> {message.text}')
+    await state.set_state(States.main_menu_state)
 
